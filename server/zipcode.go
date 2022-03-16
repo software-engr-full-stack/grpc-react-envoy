@@ -25,7 +25,7 @@ type ZipCodeDataPlaceType struct {
     Latitude float64 `json:"latitude,string"`
 }
 
-func api() (ZipCodeDataType, error) {
+func zipcode() (ZipCodeDataType, error) {
     const RequestMaxWaitTime = 20 * time.Second
 
     ctx, cancel := context.WithTimeout(context.Background(), RequestMaxWaitTime)
