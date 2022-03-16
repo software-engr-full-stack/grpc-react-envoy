@@ -1,0 +1,14 @@
+version: "3"
+services:
+  envoy:
+    # Equivalent to --add-host=host.docker.internal:host-gateway
+    # Adds host.docker.internal entry to /etc/hosts
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: grpcweb/envoy
+    ports:
+      - "8080:8080"
+      - "9901:9901"

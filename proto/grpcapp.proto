@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "repo.host/user/grpcapp";
+
+package grpcapp;
+
+service Test {
+  rpc Test (TestRequest) returns (TestReply) {}
+}
+
+message TestRequest {
+  string name = 1;
+}
+
+message TestReply {
+  string message = 1;
+}
