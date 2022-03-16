@@ -8,4 +8,3 @@ run:
 		nodemon --exec go run *.go --signal SIGTERM;\
 		sleep 2; \
 	done
-
