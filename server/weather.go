@@ -84,7 +84,6 @@ func weather(latitude, longitude float64) (WeatherDataType, error) {
 
     for ix, ds := range wdata.DataSeries {
         value, ok := weatherTable[ds.Weather]
-        fmt.Printf("%#v %#v\n", ds, value)
         if ok {
             wdata.DataSeries[ix].WeatherName = value["name"]
             wdata.DataSeries[ix].WeatherDesc = value["desc"]
