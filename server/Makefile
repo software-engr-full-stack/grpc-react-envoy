@@ -4,4 +4,4 @@ include ${_server_dir}/../proto/Makefile
 
 run:
 	make proto-main out_dir=proto && \
-	go run *.go
+	nodemon --exec go run *.go --signal SIGTERM
