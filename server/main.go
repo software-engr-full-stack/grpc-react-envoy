@@ -13,18 +13,35 @@ import (
     pb "grpc-app-server/proto"
 )
 
+const defaultPort = 50051
+
 var (
-    port = flag.Int("port", 50051, "The server port")
+    port = flag.Int("port", defaultPort, "The server port")
 )
 
 type server struct {
     pb.UnimplementedTestServer
 }
 
+type ResultType struct {
+    ZipCodeData ZipCodeDataType
+    Test string
+}
+
 func (s *server) Test(ctx context.Context, in *pb.TestRequest) (*pb.TestReply, error) {
+    zcd, err := api()
+    if err != nil {
+        return &pb.TestReply{}, err
+    }
+
     log.Printf("Received: %v", in.GetName())
 
-    result, err := json.Marshal(map[string]string{"result": "Test " + in.GetName()})
+    result, err := json.Marshal(map[string]ResultType{
+        "result": ResultType{
+            ZipCodeData: zcd,
+            Test: "Test " + in.GetName(),
+        },
+    })
     if err != nil {
         return &pb.TestReply{}, err
     }
