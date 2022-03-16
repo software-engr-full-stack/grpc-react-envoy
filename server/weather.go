@@ -19,8 +19,11 @@ type WeatherDataType struct {
 type DataSeriesType struct {
     Date float64 `json:"date"`
     Temp2m Temp2mType `json:"temp2m"`
-    Weather string `json:"weather"`
     Wind10mMax float32 `json:"wind10_max"`
+
+    Weather string `json:"weather"`
+    WeatherName string `json:"weather_name"`
+    WeatherDesc string `json:"weather_desc"`
 }
 
 type Temp2mType struct {
@@ -65,6 +68,30 @@ func weather(latitude, longitude float64) (WeatherDataType, error) {
     var wdata WeatherDataType
     if err := json.Unmarshal(body, &wdata); err != nil {
         return empty, errors.WithStack(err)
+    }
+
+    weatherTable := map[string]map[string]string{
+        "clear": map[string]string{"desc": "Total cloud cover less than 20%%", "name": "Clear"},
+        "mcloudy": map[string]string{"desc": "Total cloud cover between 20%%-80%%", "name": "Partly cloudy"},
+        "cloudy": map[string]string{"desc": "Total cloud cover over over 80%%", "name": "Cloudy"},
+        "rain": map[string]string{"desc": "Rain with total cloud cover over 80%%", "name": "Rain"},
+        "snow": map[string]string{"desc": "Snow with total cloud cover over 80%%", "name": "Snow"},
+        "ts": map[string]string{"desc": "Lifted Index less than -5", "name": "Thunderstorm"},
+        "tsrain": map[string]string{"desc": "Lifted Index less than -5 with rain", "name": "Thunderstorm with rain"},
+        "ishower": map[string]string{"desc": "Precipitation rate less than 4mm/hr with total cloud cover less than 60%%", "name": "Shower"},
+    }
+
+    for ix, ds := range wdata.DataSeries {
+        value, ok := weatherTable[ds.Weather]
+        fmt.Printf("%#v %#v\n", ds, value)
+        if ok {
+            wdata.DataSeries[ix].WeatherName = value["name"]
+            wdata.DataSeries[ix].WeatherDesc = value["desc"]
+            continue
+        }
+
+        wdata.DataSeries[ix].WeatherName = fmt.Sprintf("Unsupported weather code %#v", ds.Weather)
+        wdata.DataSeries[ix].WeatherDesc = wdata.DataSeries[ix].WeatherName
     }
 
     return wdata, nil
