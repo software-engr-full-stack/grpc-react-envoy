@@ -4,4 +4,4 @@ include ${_server_dir}/../proto/Makefile
 
 run:
 	make proto-main out_dir=proto && \
-	go run main.go
+	go run *.go
