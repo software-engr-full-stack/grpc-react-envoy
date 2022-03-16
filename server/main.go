@@ -24,12 +24,12 @@ type server struct {
 }
 
 type ResultType struct {
-    ZipCodeData ZipCodeDataType
+    APIData APIDataType
     Test string
 }
 
 func (s *server) Test(ctx context.Context, in *pb.TestRequest) (*pb.TestReply, error) {
-    zcd, err := api()
+    ad, err := api()
     if err != nil {
         return &pb.TestReply{}, err
     }
@@ -38,7 +38,7 @@ func (s *server) Test(ctx context.Context, in *pb.TestRequest) (*pb.TestReply, e
 
     result, err := json.Marshal(map[string]ResultType{
         "result": ResultType{
-            ZipCodeData: zcd,
+            APIData: ad,
             Test: "Test " + in.GetName(),
         },
     })
