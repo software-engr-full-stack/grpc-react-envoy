@@ -18,10 +18,11 @@ type ZipCodeDataType struct {
 
 type ZipCodeDataPlaceType struct {
     PlaceName string `json:"place name"`
-    Longitude string `json:"longitude"`
     State string `json:"state"`
     StateAbbreviation string `json:"state abbreviation"`
-    Latitude string `json:"latitude"`
+
+    Longitude float64 `json:"longitude,string"`
+    Latitude float64 `json:"latitude,string"`
 }
 
 func api() (ZipCodeDataType, error) {
