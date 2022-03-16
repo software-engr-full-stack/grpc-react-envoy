@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 
 	pb "grpc-app-client/proto"
 )
@@ -23,9 +24,9 @@ var (
 func main() {
 	flag.Parse()
 	// Set up a connection to the server.
-	conn, err := grpc.Dial(*addr, grpc.WithInsecure())
+	conn, err := grpc.Dial(*addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		panic(err)
 	}
 	defer conn.Close()
 	c := pb.NewTestClient(conn)
@@ -35,7 +36,7 @@ func main() {
 	defer cancel()
 	r, err := c.Test(ctx, &pb.TestRequest{Name: *name})
 	if err != nil {
-		log.Fatalf("could not greet: %v", err)
+		panic(err)
 	}
-	log.Printf("Greeting: %s", r.GetMessage())
+	log.Printf("Response from %#v...\n%s", *addr, r.GetMessage())
 }
