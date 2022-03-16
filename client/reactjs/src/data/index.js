@@ -9,10 +9,11 @@ const data = () => {
   //   Careful when entering production endpoint.
   const testService = new TestPromiseClient(process.env.REACT_APP_API_END_POINT);
   const request = new TestRequest();
-  request.setName('Bonzoor!');
+
+  request.setName('TEST FROM JAVASCRIPT!');
 
   return testService.test(request, {}).then(
-    (response) => JSON.parse(humps.camelizeKeys(response.getMessage()))
+    (response) => humps.camelizeKeys(JSON.parse(response.getMessage()))
   );
 };
 
