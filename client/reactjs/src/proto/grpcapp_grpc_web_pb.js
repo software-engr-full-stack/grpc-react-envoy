@@ -26,7 +26,7 @@ proto.grpcapp = require('./grpcapp_pb.js');
  * @struct
  * @final
  */
-proto.grpcapp.TestClient =
+proto.grpcapp.MainServiceClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
   options.format = 'text';
@@ -52,7 +52,7 @@ proto.grpcapp.TestClient =
  * @struct
  * @final
  */
-proto.grpcapp.TestPromiseClient =
+proto.grpcapp.MainServicePromiseClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
   options.format = 'text';
@@ -73,61 +73,61 @@ proto.grpcapp.TestPromiseClient =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.grpcapp.TestRequest,
- *   !proto.grpcapp.TestReply>}
+ *   !proto.grpcapp.MainServiceRequest,
+ *   !proto.grpcapp.MainServiceReply>}
  */
-const methodDescriptor_Test_Test = new grpc.web.MethodDescriptor(
-  '/grpcapp.Test/Test',
+const methodDescriptor_MainService_Run = new grpc.web.MethodDescriptor(
+  '/grpcapp.MainService/Run',
   grpc.web.MethodType.UNARY,
-  proto.grpcapp.TestRequest,
-  proto.grpcapp.TestReply,
+  proto.grpcapp.MainServiceRequest,
+  proto.grpcapp.MainServiceReply,
   /**
-   * @param {!proto.grpcapp.TestRequest} request
+   * @param {!proto.grpcapp.MainServiceRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.grpcapp.TestReply.deserializeBinary
+  proto.grpcapp.MainServiceReply.deserializeBinary
 );
 
 
 /**
- * @param {!proto.grpcapp.TestRequest} request The
+ * @param {!proto.grpcapp.MainServiceRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.RpcError, ?proto.grpcapp.TestReply)}
+ * @param {function(?grpc.web.RpcError, ?proto.grpcapp.MainServiceReply)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.grpcapp.TestReply>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.grpcapp.MainServiceReply>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.grpcapp.TestClient.prototype.test =
+proto.grpcapp.MainServiceClient.prototype.run =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/grpcapp.Test/Test',
+      '/grpcapp.MainService/Run',
       request,
       metadata || {},
-      methodDescriptor_Test_Test,
+      methodDescriptor_MainService_Run,
       callback);
 };
 
 
 /**
- * @param {!proto.grpcapp.TestRequest} request The
+ * @param {!proto.grpcapp.MainServiceRequest} request The
  *     request proto
  * @param {?Object<string, string>=} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.grpcapp.TestReply>}
+ * @return {!Promise<!proto.grpcapp.MainServiceReply>}
  *     Promise that resolves to the response
  */
-proto.grpcapp.TestPromiseClient.prototype.test =
+proto.grpcapp.MainServicePromiseClient.prototype.run =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/grpcapp.Test/Test',
+      '/grpcapp.MainService/Run',
       request,
       metadata || {},
-      methodDescriptor_Test_Test);
+      methodDescriptor_MainService_Run);
 };
 
 

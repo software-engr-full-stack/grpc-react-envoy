@@ -9,9 +9,9 @@ type APIDataType struct {
     WeatherData WeatherDataType
 }
 
-func api() (APIDataType, error) {
+func api(zcode string) (APIDataType, error) {
     var empty APIDataType
-    zcd, err := zipcode()
+    zcd, err := zipcode(zcode)
     if err != nil {
         return empty, err
     }

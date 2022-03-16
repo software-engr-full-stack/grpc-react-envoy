@@ -6,6 +6,7 @@ import (
     "net/http"
     "io"
     "encoding/json"
+    "fmt"
     "github.com/pkg/errors"
 )
 
@@ -25,7 +26,7 @@ type ZipCodeDataPlaceType struct {
     Latitude float64 `json:"latitude,string"`
 }
 
-func zipcode() (ZipCodeDataType, error) {
+func zipcode(zcode string) (ZipCodeDataType, error) {
     const RequestMaxWaitTime = 20 * time.Second
 
     ctx, cancel := context.WithTimeout(context.Background(), RequestMaxWaitTime)
@@ -33,7 +34,10 @@ func zipcode() (ZipCodeDataType, error) {
 
     var empty ZipCodeDataType
     req, err := http.NewRequestWithContext(
-        ctx, http.MethodGet, "https://api.zippopotam.us/us/33162", http.NoBody,
+        ctx,
+        http.MethodGet,
+        fmt.Sprintf("https://api.zippopotam.us/us/%s", zcode),
+        http.NoBody,
     )
     if err != nil {
         return empty, errors.WithStack(err)

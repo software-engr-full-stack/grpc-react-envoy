@@ -1,19 +1,19 @@
 import humps from 'humps';
 
-import { TestRequest } from '../proto/grpcapp_pb';
-import { TestPromiseClient } from '../proto/grpcapp_grpc_web_pb';
+import { MainServiceRequest } from '../proto/grpcapp_pb';
+import { MainServicePromiseClient } from '../proto/grpcapp_grpc_web_pb';
 
 const data = () => {
   // TODO: IMPORTANT, in .env... file
   //   REACT_APP_API_END_POINT=http://localhost:8080/ (with slash at the end) does not work
   //   Careful when entering production endpoint.
-  const testService = new TestPromiseClient(process.env.REACT_APP_API_END_POINT);
-  const request = new TestRequest();
+  const svc = new MainServicePromiseClient(process.env.REACT_APP_API_END_POINT);
+  const request = new MainServiceRequest();
 
-  request.setName('TEST FROM JAVASCRIPT!');
+  request.setZipcode('92602');
 
-  return testService.test(request, {}).then(
-    (response) => humps.camelizeKeys(JSON.parse(response.getMessage()))
+  return svc.run(request, {}).then(
+    (response) => humps.camelizeKeys(JSON.parse(response.getResponse()))
   );
 };
 

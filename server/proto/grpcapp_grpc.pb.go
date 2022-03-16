@@ -14,86 +14,86 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// TestClient is the client API for Test service.
+// MainServiceClient is the client API for MainService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type TestClient interface {
-	Test(ctx context.Context, in *TestRequest, opts ...grpc.CallOption) (*TestReply, error)
+type MainServiceClient interface {
+	Run(ctx context.Context, in *MainServiceRequest, opts ...grpc.CallOption) (*MainServiceReply, error)
 }
 
-type testClient struct {
+type mainServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewTestClient(cc grpc.ClientConnInterface) TestClient {
-	return &testClient{cc}
+func NewMainServiceClient(cc grpc.ClientConnInterface) MainServiceClient {
+	return &mainServiceClient{cc}
 }
 
-func (c *testClient) Test(ctx context.Context, in *TestRequest, opts ...grpc.CallOption) (*TestReply, error) {
-	out := new(TestReply)
-	err := c.cc.Invoke(ctx, "/grpcapp.Test/Test", in, out, opts...)
+func (c *mainServiceClient) Run(ctx context.Context, in *MainServiceRequest, opts ...grpc.CallOption) (*MainServiceReply, error) {
+	out := new(MainServiceReply)
+	err := c.cc.Invoke(ctx, "/grpcapp.MainService/Run", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// TestServer is the server API for Test service.
-// All implementations must embed UnimplementedTestServer
+// MainServiceServer is the server API for MainService service.
+// All implementations must embed UnimplementedMainServiceServer
 // for forward compatibility
-type TestServer interface {
-	Test(context.Context, *TestRequest) (*TestReply, error)
-	mustEmbedUnimplementedTestServer()
+type MainServiceServer interface {
+	Run(context.Context, *MainServiceRequest) (*MainServiceReply, error)
+	mustEmbedUnimplementedMainServiceServer()
 }
 
-// UnimplementedTestServer must be embedded to have forward compatible implementations.
-type UnimplementedTestServer struct {
+// UnimplementedMainServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedMainServiceServer struct {
 }
 
-func (UnimplementedTestServer) Test(context.Context, *TestRequest) (*TestReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Test not implemented")
+func (UnimplementedMainServiceServer) Run(context.Context, *MainServiceRequest) (*MainServiceReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Run not implemented")
 }
-func (UnimplementedTestServer) mustEmbedUnimplementedTestServer() {}
+func (UnimplementedMainServiceServer) mustEmbedUnimplementedMainServiceServer() {}
 
-// UnsafeTestServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to TestServer will
+// UnsafeMainServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to MainServiceServer will
 // result in compilation errors.
-type UnsafeTestServer interface {
-	mustEmbedUnimplementedTestServer()
+type UnsafeMainServiceServer interface {
+	mustEmbedUnimplementedMainServiceServer()
 }
 
-func RegisterTestServer(s grpc.ServiceRegistrar, srv TestServer) {
-	s.RegisterService(&Test_ServiceDesc, srv)
+func RegisterMainServiceServer(s grpc.ServiceRegistrar, srv MainServiceServer) {
+	s.RegisterService(&MainService_ServiceDesc, srv)
 }
 
-func _Test_Test_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TestRequest)
+func _MainService_Run_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MainServiceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TestServer).Test(ctx, in)
+		return srv.(MainServiceServer).Run(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/grpcapp.Test/Test",
+		FullMethod: "/grpcapp.MainService/Run",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TestServer).Test(ctx, req.(*TestRequest))
+		return srv.(MainServiceServer).Run(ctx, req.(*MainServiceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Test_ServiceDesc is the grpc.ServiceDesc for Test service.
+// MainService_ServiceDesc is the grpc.ServiceDesc for MainService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Test_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "grpcapp.Test",
-	HandlerType: (*TestServer)(nil),
+var MainService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "grpcapp.MainService",
+	HandlerType: (*MainServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Test",
-			Handler:    _Test_Test_Handler,
+			MethodName: "Run",
+			Handler:    _MainService_Run_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -4,14 +4,14 @@ option go_package = "repo.host/user/grpcapp";
 
 package grpcapp;
 
-service Test {
-  rpc Test (TestRequest) returns (TestReply) {}
+service MainService {
+  rpc Run (MainServiceRequest) returns (MainServiceReply) {}
 }
 
-message TestRequest {
-  string name = 1;
+message MainServiceRequest {
+  string zipCode = 1;
 }
 
-message TestReply {
-  string message = 1;
+message MainServiceReply {
+  string response = 1;
 }
