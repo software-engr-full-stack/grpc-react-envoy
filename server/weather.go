@@ -72,7 +72,8 @@ func weather(latitude, longitude float64) (WeatherDataType, error) {
 
     weatherTable := map[string]map[string]string{
         "clear": map[string]string{"desc": "Total cloud cover less than 20%%", "name": "Clear"},
-        "mcloudy": map[string]string{"desc": "Total cloud cover between 20%%-80%%", "name": "Partly cloudy"},
+        "pcloudy": map[string]string{"desc": "Total cloud cover between 20%%-60%%", "name": "Partly cloudy"},
+        "mcloudy": map[string]string{"desc": "Total cloud cover between 20%%-80%%", "name": "Mostly cloudy"},
         "cloudy": map[string]string{"desc": "Total cloud cover over over 80%%", "name": "Cloudy"},
         "rain": map[string]string{"desc": "Rain with total cloud cover over 80%%", "name": "Rain"},
         "snow": map[string]string{"desc": "Snow with total cloud cover over 80%%", "name": "Snow"},
