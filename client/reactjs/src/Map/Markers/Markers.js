@@ -71,7 +71,7 @@ function Markers({ markers }) {
                 className="custom-map-marker-tooltip"
               >
                 {psz}
-                <div className="custom-map-markers-ip-list">
+                <div className="custom-map-markers-dataseries-list">
                   {
                     dataseries.map(({ date, weatherName }) => (
                       <div key={date}>{date}: {weatherName}</div>
