@@ -19,11 +19,6 @@ var (
     port = flag.Int("port", defaultPort, "The server port")
 )
 
-type ResultType struct {
-    APIData APIDataType
-    Test string
-}
-
 type server struct {
     pb.UnimplementedMainServiceServer
 }
@@ -37,10 +32,8 @@ func (s *server) Run(ctx context.Context, in *pb.MainServiceRequest) (*pb.MainSe
 
     log.Printf("Received zip code: %v", in.GetZipCode())
 
-    result, err := json.Marshal(map[string]ResultType{
-        "result": ResultType{
-            APIData: ad,
-        },
+    result, err := json.Marshal(map[string]APIDataType{
+        "result": ad,
     })
     if err != nil {
         return empty, err
