@@ -1,22 +1,123 @@
 import React, { useState, useEffect } from 'react';
 
-import fetchData from './data';
+import AlertTitle from '@mui/material/AlertTitle';
+import Alert from '@mui/material/Alert';
+
+import Map from './Map/Map';
+import Input from './Map/Input';
+import RecentSearches from './Reports/RecentSearches';
+import UI from './UI/UI';
+
+import * as api from './api';
 
 function App() {
+  const [zipCode, setZipCode] = useState();
+
   const [data, setData] = useState();
+  const [isFetching, setIsFetching] = useState(false);
+  const [apiError, setAPIError] = useState();
+
+  const [dataList, setDataList] = useState([]);
+
+  const defaultZipCode = '57717';
 
   useEffect(() => {
-    fetchData().then((fd) => setData(fd));
+    setIsFetching(true);
+    api.retrieve(defaultZipCode).then((fd) => {
+      setIsFetching(false);
+      const apiErr = fd.apiError;
+      if (apiErr) {
+        setAPIError(apiErr);
+        return;
+      }
+      setZipCode(defaultZipCode);
+      setData(fd);
+      setDataList(api.savedDataList());
+    });
   }, []);
 
-  console.log({ data });
+  const defaultInputLabel = 'Enter zip code';
+  const [inputLabel, setInputLabel] = useState(defaultInputLabel);
+
+  const handleSubmit = (zcode) => {
+    setIsFetching(true);
+    api.retrieve(zcode).then((fd) => {
+      setIsFetching(false);
+      const apiErr = fd.apiError;
+      if (apiErr) {
+        setAPIError(apiErr);
+        return;
+      }
+      setZipCode(zcode);
+      setData(fd);
+      setDataList(api.savedDataList());
+    });
+  };
+
+  const handleClickEntry = (entry) => {
+    setZipCode(entry.location.zipCode);
+    setData(entry);
+  };
+
+  const handleClearSearches = () => {
+    setDataList([]);
+    api.persistClear();
+    handleSubmit(defaultZipCode);
+  };
+
+  if (apiError) {
+    return (
+      // TODO: Make front end error reporting more robust.
+      //   Probably add a on close (onClose) handler.
+      //   See src/Map/Input.js Alert.
+      <Alert severity="error">
+        <AlertTitle>Error</AlertTitle>
+        {apiError}
+      </Alert>
+    );
+  }
+
+  if (!data) {
+    return null;
+  }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        Test
-      </header>
-    </div>
+    <UI
+      Input={(
+        <Input
+          error={apiError}
+          setAPIError={setAPIError}
+          onSubmit={handleSubmit}
+          defaultLabel={defaultInputLabel}
+          setLabel={setInputLabel}
+          label={inputLabel}
+          isFetching={isFetching}
+          text={zipCode}
+        />
+      )}
+      LeftSideBar={(
+        <RecentSearches
+          onClickEntry={handleClickEntry}
+          onClearSearches={handleClearSearches}
+          dataList={dataList}
+          currentEntry={data}
+        />
+      )}
+    >
+      {
+        isFetching ? (
+          <div
+            style={{
+              opacity: 0.25,
+              background: '#000000',
+              height: '92vh'
+            }}
+          />
+        ) : (
+          <Map markers={dataList} />
+        )
+      }
+    </UI>
   );
 }
 
