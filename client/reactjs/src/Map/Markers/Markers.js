@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -12,7 +12,11 @@ import {
   Icon
 } from 'leaflet';
 
+import Box from '@mui/material/Box';
+
 import markerIconPng from 'leaflet/dist/images/marker-icon.png';
+
+import CurrentEntryContext from '../../context';
 
 function Markers({ markers }) {
   const map = useMap();
@@ -39,6 +43,8 @@ function Markers({ markers }) {
     map.fitBounds(markerBounds, { padding: [1, 1] });
   }, [map, markers]);
 
+  const curEnt = useContext(CurrentEntryContext);
+
   return (
     <>
       {
@@ -56,6 +62,10 @@ function Markers({ markers }) {
 
           const { dataseries } = weatherData;
 
+          const selectedBgColor = (
+            curEnt && curEnt.location && curEnt.location.zipCode === zipCode
+          ) ? '#edf4fc' : '';
+
           return (
             <Marker
               key={psz}
@@ -70,14 +80,16 @@ function Markers({ markers }) {
                 permanent
                 className="custom-map-marker-tooltip"
               >
-                {psz}
-                <div className="custom-map-markers-dataseries-list">
-                  {
-                    dataseries.map(({ date, weatherName }) => (
-                      <div key={date}>{date}: {weatherName}</div>
-                    ))
-                  }
-                </div>
+                <Box sx={{ bgcolor: selectedBgColor, padding: '2px 4px' }}>
+                  {psz}
+                  <div className="custom-map-markers-dataseries-list">
+                    {
+                      dataseries.map(({ date, weatherName }) => (
+                        <div key={date}>{date}: {weatherName}</div>
+                      ))
+                    }
+                  </div>
+                </Box>
               </Tooltip>
             </Marker>
           );

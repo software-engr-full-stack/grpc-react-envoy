@@ -8,6 +8,7 @@ import Input from './Map/Input';
 import RecentSearches from './Reports/RecentSearches';
 import UI from './UI/UI';
 
+import { CurrentEntryProvider } from './context';
 import * as api from './api';
 
 function App() {
@@ -82,42 +83,44 @@ function App() {
   }
 
   return (
-    <UI
-      Input={(
-        <Input
-          error={apiError}
-          setAPIError={setAPIError}
-          onSubmit={handleSubmit}
-          defaultLabel={defaultInputLabel}
-          setLabel={setInputLabel}
-          label={inputLabel}
-          isFetching={isFetching}
-          text={zipCode}
-        />
-      )}
-      LeftSideBar={(
-        <RecentSearches
-          onClickEntry={handleClickEntry}
-          onClearSearches={handleClearSearches}
-          dataList={dataList}
-          currentEntry={data}
-        />
-      )}
-    >
-      {
-        isFetching ? (
-          <div
-            style={{
-              opacity: 0.25,
-              background: '#000000',
-              height: '92vh'
-            }}
+    <CurrentEntryProvider value={data}>
+      <UI
+        Input={(
+          <Input
+            error={apiError}
+            setAPIError={setAPIError}
+            onSubmit={handleSubmit}
+            defaultLabel={defaultInputLabel}
+            setLabel={setInputLabel}
+            label={inputLabel}
+            isFetching={isFetching}
+            text={zipCode}
           />
-        ) : (
-          <Map markers={dataList} />
-        )
-      }
-    </UI>
+        )}
+        LeftSideBar={(
+          <RecentSearches
+            onClickEntry={handleClickEntry}
+            onClearSearches={handleClearSearches}
+            dataList={dataList}
+            currentEntry={data}
+          />
+        )}
+      >
+        {
+          isFetching ? (
+            <div
+              style={{
+                opacity: 0.25,
+                background: '#000000',
+                height: '92vh'
+              }}
+            />
+          ) : (
+            <Map markers={dataList} />
+          )
+        }
+      </UI>
+    </CurrentEntryProvider>
   );
 }
 

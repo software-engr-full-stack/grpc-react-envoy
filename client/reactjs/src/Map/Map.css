@@ -8,12 +8,9 @@
     box-shadow: none !important;
 }
 
-.custom-urban-area-score {
-  text-shadow: 1px 1px #AAAAAA;
-}
-
 .custom-map-marker-tooltip {
   pointer-events: auto;
+  padding: 0;
 }
 
 .custom-map-markers-dataseries-list {
