@@ -40,7 +40,7 @@ function Markers({ markers }) {
       markerBounds.extend([latitude, longitude]);
     });
 
-    map.fitBounds(markerBounds, { padding: [1, 1] });
+    map.fitBounds(markerBounds, { padding: [10, 20] });
   }, [map, markers]);
 
   const curEnt = useContext(CurrentEntryContext);
