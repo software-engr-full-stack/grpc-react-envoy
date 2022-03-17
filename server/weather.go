@@ -75,7 +75,12 @@ func weather(latitude, longitude float64) (WeatherDataType, error) {
         "pcloudy": map[string]string{"desc": "Total cloud cover between 20%%-60%%", "name": "Partly cloudy"},
         "mcloudy": map[string]string{"desc": "Total cloud cover between 20%%-80%%", "name": "Mostly cloudy"},
         "cloudy": map[string]string{"desc": "Total cloud cover over over 80%%", "name": "Cloudy"},
+        "lightrain": map[string]string{
+            "desc": "Precipitation rate less than 4mm/hr with total cloud cover more than 80%%",
+            "name": "Light rain",
+        },
         "rain": map[string]string{"desc": "Rain with total cloud cover over 80%%", "name": "Rain"},
+        "lightsnow": map[string]string{"desc": "Precipitation rate less than 4mm/hr", "name": "Light snow"},
         "snow": map[string]string{"desc": "Snow with total cloud cover over 80%%", "name": "Snow"},
         "ts": map[string]string{"desc": "Lifted Index less than -5", "name": "Thunderstorm"},
         "tsrain": map[string]string{"desc": "Lifted Index less than -5 with rain", "name": "Thunderstorm with rain"},
