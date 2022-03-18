@@ -1,6 +1,6 @@
 FROM node:latest
 
-RUN apt-get update && apt-get install --yes git vim nmap tree iputils-ping netcat net-tools bind9-dnsutils:
+RUN apt-get update && apt-get install --yes git vim nmap tree iputils-ping netcat net-tools bind9-dnsutils
 
 RUN mkdir -p /deploy/app
 
