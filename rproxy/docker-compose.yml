@@ -1,6 +1,7 @@
 version: "3.5"
 services:
   envoy:
+    container_name: reverse_proxy
     # Equivalent to --add-host=host.docker.internal:host-gateway
     # Adds host.docker.internal entry to /etc/hosts
     extra_hosts:
