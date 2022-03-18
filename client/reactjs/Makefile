@@ -15,6 +15,8 @@ proto:
 		--proto_path="${proto_dir}" \
 		${proto_files}
 
+# Network name in --net rproxy_default should match the network name in the
+#   Docker compose file of the reverse proxy.
 docker:
 	docker build --tag react-build-test . && \
 	docker run --rm --net rproxy_default --publish 80:80 --name react-build-test react-build-test
