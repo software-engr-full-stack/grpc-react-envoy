@@ -1,6 +1,6 @@
 FROM node:latest
 
-RUN apt-get update && apt-get install --yes git vim nmap tree iputils-ping netcat net-tools bind9-dnsutils
+RUN apt-get update && apt-get install --yes git vim nmap tree iputils-ping netcat net-tools
 
 RUN mkdir -p /deploy/app
 
@@ -12,10 +12,12 @@ WORKDIR /deploy/app/grpc-react-envoy/client/reactjs
 
 RUN npm install
 
-COPY .env.production.local .
+COPY .env.production.docker .env.production.local
 
 RUN npm run build
 
 WORKDIR /deploy/app/grpc-react-envoy/client/reactjs/build
 
-CMD npx serve --listen 80
+RUN npm install --global serve
+
+CMD serve --listen 80
