@@ -15,5 +15,9 @@ proto:
 		--proto_path="${proto_dir}" \
 		${proto_files}
 
+docker:
+	docker build --tag react-build-test . && \
+	docker run --rm --net rproxy_default --publish 80:80 --name react-build-test react-build-test
+
 run: proto
 	BROWSER=none npm start
