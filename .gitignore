@@ -63,3 +63,4 @@ terraform.rc
 # END: Terraform
 
 **/secrets/
+**/terraform.tfstate
