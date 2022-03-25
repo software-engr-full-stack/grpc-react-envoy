@@ -13,12 +13,12 @@ import (
 )
 
 const (
-	defaultName = "world"
+	defaultInput = "57717"
 )
 
 var (
 	addr = flag.String("addr", "localhost:8080", "the address to connect to")
-	name = flag.String("name", defaultName, "Name to greet")
+	zipCode = flag.String("zipcode", defaultInput, "zip code")
 )
 
 func main() {
@@ -29,14 +29,14 @@ func main() {
 		panic(err)
 	}
 	defer conn.Close()
-	c := pb.NewTestClient(conn)
+	c := pb.NewMainServiceClient(conn)
 
 	// Contact the server and print out its response.
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	r, err := c.Test(ctx, &pb.TestRequest{Name: *name})
+	r, err := c.Run(ctx, &pb.MainServiceRequest{ZipCode: *zipCode})
 	if err != nil {
 		panic(err)
 	}
-	log.Printf("Response from %#v...\n%s", *addr, r.GetMessage())
+	log.Printf("Response from %#v...\n%s", *addr, r.GetResponse())
 }
