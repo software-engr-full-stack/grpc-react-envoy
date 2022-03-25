@@ -13,3 +13,4 @@ run:
 		go run *.go; \
 	fi
 
+.PHONY: run
