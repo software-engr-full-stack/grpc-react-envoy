@@ -4,7 +4,12 @@ include ${_server_dir}/../proto/Makefile
 
 run:
 	make proto-main out_dir=proto && \
-	while true; do \
-		nodemon --exec go run *.go --signal SIGTERM;\
-		sleep 2; \
-	done
+	if type nodemon >/dev/null; then \
+		while true; do \
+			nodemon --exec go run *.go --signal SIGTERM; \
+			sleep 2; \
+		done \
+	else \
+		go run *.go; \
+	fi
+
