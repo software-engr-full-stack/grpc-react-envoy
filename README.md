@@ -45,7 +45,7 @@ Steps:
 
 5. Start the React dev server. This will run in the foreground:
 
-    `cd client/reactjs && make run`
+    `cd client/reactjs && npm install && make run`
 
 6. Open your browser to `http://localhost:3000/`
 
