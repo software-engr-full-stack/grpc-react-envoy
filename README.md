@@ -25,17 +25,25 @@ Firewalls: if you have a firewall running, open port 50051.
 
 Steps:
 
-1. Clone this repo and `cd` into the clone directory
+1. Install the "Protocol Buffer Compiler"
 
-2. Start the backend server. This will run in the foreground:
+2. Install the Go plugins for the protocol compiler:
+
+    `go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.26`
+
+    `go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.1`
+
+3. Clone this repo and `cd` into the clone directory
+
+4. Start the backend server. This will run in the foreground:
 
     `cd server && make run`
 
-3. Start Envoy. This will run in the foreground:
+5. Start Envoy. This will run in the foreground:
 
     `cd rproxy && make run`
 
-4. Test using a Go client. These are simple command line tests to make sure the proxy and backend are working:
+6. Test using a Go client. These are simple command line tests to make sure the proxy and backend are working:
 
     `cd client/go`
 
@@ -43,11 +51,11 @@ Steps:
 
     `make send-request-to-proxy`
 
-5. Start the React dev server. This will run in the foreground:
+7. Start the React dev server. This will run in the foreground:
 
     `cd client/reactjs && npm install && make run`
 
-6. Open your browser to `http://localhost:3000/`
+8. Open your browser to `http://localhost:3000/`
 
 ## TODO
 
