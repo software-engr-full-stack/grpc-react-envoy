@@ -59,8 +59,8 @@ Steps:
 
 ## TODO
 
-- [ ] deploy to AWS
+- [ ] Deploy to AWS
 
-- [ ] center map on the corresponding marker when clicking on a search result item found in the left sidebar list
+- [ ] Center map on the corresponding marker when clicking on a search result item found in the left sidebar list
 
 - [ ] Write tests
