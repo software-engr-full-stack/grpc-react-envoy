@@ -1,14 +1,14 @@
 version: "3.5"
 services:
   envoy:
-    container_name: reverse_proxy
+    container_name: envoy-http2
     # Equivalent to --add-host=host.docker.internal:host-gateway
     # Adds host.docker.internal entry to /etc/hosts
     extra_hosts:
       - "host.docker.internal:host-gateway"
     build:
       context: ./
-      dockerfile: ./Dockerfile
+      dockerfile: ./envoy-http2.Dockerfile
     image: grpcweb/envoy
     ports:
       - "8080:8080"
