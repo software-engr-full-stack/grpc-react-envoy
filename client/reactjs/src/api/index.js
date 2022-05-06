@@ -17,7 +17,9 @@ const retrieve = (zipCode) => {
   // TODO: IMPORTANT, in .env... file
   //   REACT_APP_API_END_POINT=http://localhost:8080/ (with slash at the end) does not work
   //   Careful when entering production endpoint.
-  const svc = new MainServicePromiseClient(process.env.REACT_APP_API_END_POINT);
+
+  const svc = new MainServicePromiseClient('');
+  // const svc = new MainServicePromiseClient(process.env.REACT_APP_API_END_POINT);
   const request = new MainServiceRequest();
 
   request.setZipcode(zipCode);
