@@ -14,6 +14,19 @@ services:
       - "8080:8080"
       - "9901:9901"
 
+  nginx:
+    container_name: nginx
+    # Equivalent to --add-host=host.docker.internal:host-gateway
+    # Adds host.docker.internal entry to /etc/hosts
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    build:
+      context: ./
+      dockerfile: ./nginx.Dockerfile
+    image: nginx
+    ports:
+      - "8081:80"
+
 networks:
   default:
     name: rproxy_default
