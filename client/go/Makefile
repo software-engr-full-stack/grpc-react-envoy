@@ -10,7 +10,7 @@ send-request-directly-to-backend:
 	echo && \
 	echo "Expected place name and state output: ${_expected_place_name_and_state}"
 
-send-request-to-proxy:
+send-request-to-envoy-proxy:
 	go run main.go && \
 	echo && \
 	echo "Expected place name and state output: ${_expected_place_name_and_state}"
