@@ -1,5 +1,0 @@
-[default]
-$remote_ips
-
-[test]
-localhost
