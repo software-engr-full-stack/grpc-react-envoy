@@ -64,3 +64,5 @@ terraform.rc
 
 **/secrets/
 **/terraform.tfstate
+
+/server/grpc-app-server
