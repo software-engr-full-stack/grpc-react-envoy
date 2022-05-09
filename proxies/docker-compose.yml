@@ -33,4 +33,5 @@ networks:
     driver: bridge
     ipam:
       config:
+        # Note: ... see firewall configuration in deployment.
         - subnet: 10.4.0.0/24
