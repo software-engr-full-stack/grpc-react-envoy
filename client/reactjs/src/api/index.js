@@ -14,7 +14,7 @@ import {
 const retrieve = (zipCode) => {
   if (presentInSaved(zipCode)) return Promise.resolve(presentInSaved(zipCode));
 
-  const svc = new MainServicePromiseClient('');
+  const svc = new MainServicePromiseClient('/api');
   const request = new MainServiceRequest();
 
   request.setZipcode(zipCode);
