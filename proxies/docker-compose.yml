@@ -29,5 +29,8 @@ services:
 
 networks:
   default:
-    name: rproxy_default
+    name: proxies
     driver: bridge
+    ipam:
+      config:
+        - subnet: 10.4.0.0/24
