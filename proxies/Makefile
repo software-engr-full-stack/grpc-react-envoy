@@ -2,7 +2,7 @@ run:
 	docker compose up --build --remove-orphans
 
 deploy:
-	docker compose up --build --remove-orphans --detach envoy
+	ENVOY_RESTART=always docker compose up --build --remove-orphans --detach envoy
 
 envoy:
 	docker compose up --build --remove-orphans envoy
