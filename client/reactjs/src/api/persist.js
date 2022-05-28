@@ -1,5 +1,6 @@
 const persistKey = 'zipcode-weather-8b5365822adb';
 const zipTableKey = 'zipTable';
+const currentZipCodeKey = 'currentZipCode';
 
 const defaultEmptyStore = { [zipTableKey]: {} };
 
@@ -11,7 +12,7 @@ const hydrate = () => {
   return JSON.parse(saved);
 };
 
-const persist = (data) => {
+const persist = (currentZipCode, data) => {
   if (!data) {
     console.error('... must pass defined params to be persisted'); // eslint-disable-line no-console
     throw Error('^^^');
@@ -19,13 +20,19 @@ const persist = (data) => {
 
   const saved = hydrate();
 
+  const zipTable = saved[zipTableKey];
+
+  Object.keys(zipTable).forEach((zcode) => {
+    zipTable[zcode][currentZipCodeKey] = false;
+  });
+
   localStorage.setItem(
     persistKey,
     JSON.stringify({
       data,
       [zipTableKey]: {
-        ...saved[zipTableKey],
-        [data.location.zipCode]: data
+        ...zipTable,
+        [data.location.zipCode]: { ...data, [currentZipCodeKey]: true }
       }
     })
   );
@@ -36,9 +43,14 @@ const presentInSaved = (zipCode) => {
   return (saved && saved[zipTableKey] && saved[zipTableKey][zipCode]);
 };
 
+const noSavedData = (saved) => (
+  !saved || !saved[zipTableKey] || Object.keys(saved[zipTableKey]).length < 1
+);
+
 const savedDataList = (currentZipCode) => {
   const saved = hydrate();
-  if (!saved || !saved[zipTableKey]) return [];
+
+  if (noSavedData(saved)) return [];
 
   const zipTable = saved[zipTableKey];
 
@@ -46,14 +58,6 @@ const savedDataList = (currentZipCode) => {
     console.error('... saved does not contain current zip code', zipTable, currentZipCode); // eslint-disable-line no-console
     throw Error('^^^');
   }
-
-  Object.keys(zipTable).forEach((zcode) => {
-    if (zcode === currentZipCode) {
-      zipTable[zcode].current = true;
-    } else {
-      zipTable[zcode].current = false;
-    }
-  });
 
   return Object.values(zipTable);
 };
@@ -67,5 +71,6 @@ export {
   hydrate,
   persistClear,
   presentInSaved,
-  savedDataList
+  savedDataList,
+  noSavedData
 };

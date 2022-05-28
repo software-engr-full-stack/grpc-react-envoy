@@ -23,6 +23,15 @@ function App() {
   useEffect(() => {
     setIsFetching(true);
 
+    const saved = api.savedDataList(api.defaultZipCode);
+
+    if (!api.noSavedData(saved)) {
+      setIsFetching(false);
+      setZipCode(api.defaultZipCode);
+      setDataList(saved);
+      return;
+    }
+
     api.defaultLocation().then((fd) => {
       setIsFetching(false);
       const apiErr = fd.apiError;

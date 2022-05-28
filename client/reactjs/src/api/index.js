@@ -8,7 +8,8 @@ import {
   hydrate,
   persistClear,
   presentInSaved,
-  savedDataList
+  savedDataList,
+  noSavedData
 } from './persist';
 
 const defaultZipCode = '57717';
@@ -39,7 +40,7 @@ const retrieve = (zipCode) => {
         }
       };
 
-      persist(blob);
+      persist(zcode, blob);
 
       return blob;
     }
@@ -55,5 +56,6 @@ export {
   hydrate,
   persist,
   persistClear,
-  savedDataList
+  savedDataList,
+  noSavedData
 };

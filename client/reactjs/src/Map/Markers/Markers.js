@@ -22,7 +22,7 @@ function Markers({ markers }) {
   const map = useMap();
 
   useEffect(() => {
-    const current = markers.find((mkr) => (mkr.current)) || markers[0];
+    const current = markers.find((mkr) => (mkr.currentZipCode)) || markers[0];
 
     const { latitude, longitude } = current.location;
     map.setView(
