@@ -62,8 +62,8 @@ Steps:
 
 ## TODO
 
-- [ ] Deploy to AWS
+- [x] Deploy to ~~AWS~~ DigitalOcean
 
-- [ ] Center map on the corresponding marker when clicking on a search result item found in the left sidebar list
+- [x] Center map on the corresponding marker when clicking on a search result item found in the left sidebar list
 
 - [ ] Write tests
