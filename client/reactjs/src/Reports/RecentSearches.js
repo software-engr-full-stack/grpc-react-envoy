@@ -13,8 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 export default function RecentSearches({
   onClickEntry,
   onClearSearches,
-  dataList,
-  currentEntry
+  dataList
 }) {
   return (
     <List>
@@ -33,7 +32,7 @@ export default function RecentSearches({
           <ListItem
             button
             key={data.location.zipCode}
-            selected={currentEntry.location.zipCode === data.location.zipCode}
+            selected={data.isCurrentZipCode}
             onClick={() => { onClickEntry(data); }}
           >
             <ListItemText primary={text} />
@@ -47,6 +46,5 @@ export default function RecentSearches({
 RecentSearches.propTypes = {
   onClickEntry: PropTypes.func.isRequired,
   onClearSearches: PropTypes.func.isRequired,
-  currentEntry: PropTypes.shape().isRequired,
   dataList: PropTypes.arrayOf(PropTypes.shape()).isRequired
 };

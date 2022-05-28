@@ -64,8 +64,22 @@ function App() {
   };
 
   const handleClickEntry = (entry) => {
-    setZipCode(entry.location.zipCode);
-    setData(entry);
+    // Hack but should be OK for now
+    const zcode = entry.location.zipCode;
+    api.retrieve(zcode).then((blob) => {
+      // Should have no error because the data should be in local storage at this point.
+      // const apiErr = fd.apiError;
+      // if (apiErr) {
+      //   setAPIError(apiErr);
+      //   return;
+      // }
+
+      api.persist(zcode, blob);
+
+      setZipCode(zcode);
+      setData(blob);
+      setDataList(api.savedDataList(zcode));
+    });
   };
 
   const handleClearSearches = () => {
