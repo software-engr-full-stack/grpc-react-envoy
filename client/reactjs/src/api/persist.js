@@ -1,6 +1,6 @@
 const persistKey = 'zipcode-weather-8b5365822adb';
 const zipTableKey = 'zipTable';
-const currentZipCodeKey = 'currentZipCode';
+const isCurrentZipCodeKey = 'isCurrentZipCode';
 
 const defaultEmptyStore = { [zipTableKey]: {} };
 
@@ -23,7 +23,7 @@ const persist = (currentZipCode, data) => {
   const zipTable = saved[zipTableKey];
 
   Object.keys(zipTable).forEach((zcode) => {
-    zipTable[zcode][currentZipCodeKey] = false;
+    zipTable[zcode][isCurrentZipCodeKey] = false;
   });
 
   localStorage.setItem(
@@ -32,7 +32,7 @@ const persist = (currentZipCode, data) => {
       data,
       [zipTableKey]: {
         ...zipTable,
-        [data.location.zipCode]: { ...data, [currentZipCodeKey]: true }
+        [data.location.zipCode]: { ...data, [isCurrentZipCodeKey]: true }
       }
     })
   );

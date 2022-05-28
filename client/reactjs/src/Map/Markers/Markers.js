@@ -1,4 +1,6 @@
-import React, { useEffect, useContext } from 'react';
+import React, {
+  useEffect
+} from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -16,13 +18,11 @@ import Box from '@mui/material/Box';
 
 import markerIconPng from 'leaflet/dist/images/marker-icon.png';
 
-import CurrentEntryContext from '../../context';
-
 function Markers({ markers }) {
   const map = useMap();
 
   useEffect(() => {
-    const current = markers.find((mkr) => (mkr.currentZipCode)) || markers[0];
+    const current = markers.find((mkr) => (mkr.isCurrentZipCode)) || markers[0];
 
     const { latitude, longitude } = current.location;
     map.setView(
@@ -55,12 +55,10 @@ function Markers({ markers }) {
     // map.fitBounds(markerBounds, { padding: [10, 20] });
   }, [map, markers]);
 
-  const curEnt = useContext(CurrentEntryContext);
-
   return (
     <>
       {
-        markers.map(({ location, weatherData }) => {
+        markers.map(({ isCurrentZipCode, location, weatherData }) => {
           const {
             latitude,
             longitude,
@@ -74,9 +72,7 @@ function Markers({ markers }) {
 
           const { dataseries } = weatherData;
 
-          const selectedBgColor = (
-            curEnt && curEnt.location && curEnt.location.zipCode === zipCode
-          ) ? '#edf4fc' : '';
+          const selectedBgColor = isCurrentZipCode ? '#edf4fc' : '';
 
           return (
             <Marker
