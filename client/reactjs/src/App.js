@@ -20,8 +20,6 @@ function App() {
 
   const [dataList, setDataList] = useState([]);
 
-  const defaultZipCode = '57717';
-
   useEffect(() => {
     setIsFetching(true);
 
@@ -32,9 +30,9 @@ function App() {
         setAPIError(apiErr);
         return;
       }
-      setZipCode(defaultZipCode);
+      setZipCode(api.defaultZipCode);
       setData(fd);
-      setDataList(api.savedDataList());
+      setDataList(api.savedDataList(api.defaultZipCode));
     });
   }, []);
 
@@ -52,7 +50,7 @@ function App() {
       }
       setZipCode(zcode);
       setData(fd);
-      setDataList(api.savedDataList());
+      setDataList(api.savedDataList(zcode));
     });
   };
 
@@ -64,7 +62,7 @@ function App() {
   const handleClearSearches = () => {
     setDataList([]);
     api.persistClear();
-    handleSubmit(defaultZipCode);
+    handleSubmit(api.defaultZipCode);
   };
 
   if (apiError) {

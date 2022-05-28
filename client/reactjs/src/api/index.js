@@ -32,7 +32,11 @@ const retrieve = (zipCode) => {
 
       const blob = {
         ...result,
-        location: { ...zipCodeData.places[0], zipCode: zcode, default: zcode === defaultZipCode }
+        location: {
+          ...zipCodeData.places[0],
+          zipCode: zcode,
+          default: zcode === defaultZipCode
+        }
       };
 
       persist(blob);
@@ -45,6 +49,7 @@ const retrieve = (zipCode) => {
 const defaultLocation = () => retrieve(defaultZipCode);
 
 export {
+  defaultZipCode,
   defaultLocation,
   retrieve,
   hydrate,

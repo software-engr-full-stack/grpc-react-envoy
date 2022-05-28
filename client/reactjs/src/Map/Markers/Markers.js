@@ -8,7 +8,7 @@ import {
 } from 'react-leaflet';
 
 import {
-  latLngBounds,
+  // latLngBounds,
   Icon
 } from 'leaflet';
 
@@ -22,25 +22,37 @@ function Markers({ markers }) {
   const map = useMap();
 
   useEffect(() => {
-    if (markers.length === 1) {
-      const { latitude, longitude } = markers[0].location;
-      map.setView(
-        // Center
-        [latitude, longitude],
+    const current = markers.find((mkr) => (mkr.current)) || markers[0];
 
-        // Zoom
-        12
-      );
-      return;
-    }
+    const { latitude, longitude } = current.location;
+    map.setView(
+      // Center
+      [latitude, longitude],
 
-    const markerBounds = latLngBounds([]);
-    markers.forEach(({ location }) => {
-      const { latitude, longitude } = location;
-      markerBounds.extend([latitude, longitude]);
-    });
+      // Zoom
+      12
+    );
+    // return;
 
-    map.fitBounds(markerBounds, { padding: [10, 20] });
+    // if (markers.length === 1) {
+    //   const { latitude, longitude } = markers[0].location;
+    //   map.setView(
+    //     // Center
+    //     [latitude, longitude],
+
+    //     // Zoom
+    //     12
+    //   );
+    //   // return;
+    // }
+
+    // const markerBounds = latLngBounds([]);
+    // markers.forEach(({ location }) => {
+    //   const { latitude, longitude } = location;
+    //   markerBounds.extend([latitude, longitude]);
+    // });
+
+    // map.fitBounds(markerBounds, { padding: [10, 20] });
   }, [map, markers]);
 
   const curEnt = useContext(CurrentEntryContext);
