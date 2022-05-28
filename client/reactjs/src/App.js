@@ -24,7 +24,8 @@ function App() {
 
   useEffect(() => {
     setIsFetching(true);
-    api.retrieve(defaultZipCode).then((fd) => {
+
+    api.defaultLocation().then((fd) => {
       setIsFetching(false);
       const apiErr = fd.apiError;
       if (apiErr) {

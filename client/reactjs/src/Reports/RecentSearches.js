@@ -27,16 +27,19 @@ export default function RecentSearches({
         </Tooltip>
       </ListSubheader>
 
-      {dataList.map((data) => (
-        <ListItem
-          button
-          key={data.location.zipCode}
-          selected={currentEntry.location.zipCode === data.location.zipCode}
-          onClick={() => { onClickEntry(data); }}
-        >
-          <ListItemText primary={data.location.zipCode} />
-        </ListItem>
-      ))}
+      {dataList.map((data) => {
+        const text = data.location.zipCode + (data.location.default ? ' (default)' : '');
+        return (
+          <ListItem
+            button
+            key={data.location.zipCode}
+            selected={currentEntry.location.zipCode === data.location.zipCode}
+            onClick={() => { onClickEntry(data); }}
+          >
+            <ListItemText primary={text} />
+          </ListItem>
+        );
+      })}
     </List>
   );
 }

@@ -11,6 +11,7 @@ import {
   savedDataList
 } from './persist';
 
+const defaultZipCode = '57717';
 const retrieve = (zipCode) => {
   if (presentInSaved(zipCode)) return Promise.resolve(presentInSaved(zipCode));
 
@@ -31,7 +32,7 @@ const retrieve = (zipCode) => {
 
       const blob = {
         ...result,
-        location: { ...zipCodeData.places[0], zipCode: zcode }
+        location: { ...zipCodeData.places[0], zipCode: zcode, default: zcode === defaultZipCode }
       };
 
       persist(blob);
@@ -41,7 +42,10 @@ const retrieve = (zipCode) => {
   ).catch((error) => ({ apiError: error.message }));
 };
 
+const defaultLocation = () => retrieve(defaultZipCode);
+
 export {
+  defaultLocation,
   retrieve,
   hydrate,
   persist,
