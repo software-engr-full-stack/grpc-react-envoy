@@ -17,6 +17,14 @@ The backend is written in Go. The frontend is a React app. Requests from the fro
 
 The reverse proxy used in this project is called [Envoy](https://www.envoyproxy.io/docs/envoy/latest/intro/what_is_envoy). It's going to run inside a Docker container.
 
+## Deployment Diagram
+
+    Web client <--> Nginx <-- HTTP1.x --> Envoy (Docker) <-- HTTP2 --> Go server <--> Weather API
+                                                                            |
+                                                                            +--> Map API
+
+Note: the request passes through an Nginx server because I already have an Nginx server running, listening on ports 80 and 443, from another project.
+
 ## How to run the development environment
 
 Prerequisites: you must have Go, NodeJS and Docker installed in your development environment. If you want your backend server to reload automatically after editing the backend server code, install nodemon.
