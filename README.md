@@ -31,7 +31,7 @@ Prerequisites: you must have Go, NodeJS and Docker installed in your development
 
 Ports: 8080 (Envoy) and 50051 (backend) should be unused.
 
-Firewalls: if you have a firewall running, open port 50051.
+Firewalls: if you have a firewall running, open ports 50051 and 8080.
 
 Steps:
 
@@ -52,7 +52,7 @@ Steps:
 
 5. Start Envoy. This will run in the foreground:
 
-    `cd rproxy && make run`
+    `cd proxies && make run`
 
 6. Test using a Go client. These are simple command line tests to make sure the proxy and backend are working:
 
