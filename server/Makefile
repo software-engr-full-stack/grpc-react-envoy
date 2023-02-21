@@ -2,7 +2,7 @@ _server_dir := $(dir $(abspath $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST)
 
 include ${_server_dir}/../proto/Makefile
 
-_deploy_go_path := /usr/local/go/bin/go
+_deploy_go_path := /home/deploy/bin/go/bin/go
 
 deploy:
 	make proto-main out_dir=proto && \
